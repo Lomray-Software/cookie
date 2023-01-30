@@ -73,21 +73,23 @@ function parse(str, options) {
     }
 
     var key = str.slice(index, eqIdx).trim()
-    var val = str.slice(eqIdx + 1, endIdx).trim()
+    var isKeyNotExist = undefined === obj[key];
 
-    // quoted values
-    if (val.charCodeAt(0) === 0x22) {
-      val = val.slice(1, -1)
-    }
+    if (opt.multiValuedCookies || isKeyNotExist) {
+      var val = str.slice(eqIdx + 1, endIdx).trim()
 
-    // only assign once
-    if (undefined === obj[key]) {
-      obj[key] = tryDecode(val, dec);
-    } else if (opt.multiValuedCookies) {
-      if (typeof obj[key] === 'string') {
-        obj[key] = [obj[key], tryDecode(val, dec)];
-      } else {
+      // quoted values
+      if (val.charCodeAt(0) === 0x22) {
+        val = val.slice(1, -1)
+      }
+
+      if (opt.multiValuedCookies) {
+        if (isKeyNotExist) {
+          obj[key] = [];
+        }
         obj[key].push(tryDecode(val, dec));
+      } else if (isKeyNotExist) {
+        obj[key] = tryDecode(val, dec);
       }
     }
 
