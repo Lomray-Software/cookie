@@ -36,7 +36,7 @@ var fieldContentRegExp = /^[\u0009\u0020-\u007e\u0080-\u00ff]+$/;
  * Parse a cookie header.
  *
  * Parse the given cookie header string into an object
- * The object has the various cookies as keys(names) => values
+ * The object has the various cookies as keys(names) => values or array of values
  *
  * @param {string} str
  * @param {object} [options]
@@ -84,6 +84,12 @@ function parse(str, options) {
       }
 
       obj[key] = tryDecode(val, dec);
+    } else if (opt.multiValuedCookies) {
+      if (typeof obj[key] === 'string') {
+        obj[key] = [obj[key], tryDecode(val, dec)];
+      } else {
+        obj[key].push(tryDecode(val, dec));
+      }
     }
 
     index = endIdx + 1
