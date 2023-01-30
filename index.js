@@ -73,16 +73,15 @@ function parse(str, options) {
     }
 
     var key = str.slice(index, eqIdx).trim()
+    var val = str.slice(eqIdx + 1, endIdx).trim()
+
+    // quoted values
+    if (val.charCodeAt(0) === 0x22) {
+      val = val.slice(1, -1)
+    }
 
     // only assign once
     if (undefined === obj[key]) {
-      var val = str.slice(eqIdx + 1, endIdx).trim()
-
-      // quoted values
-      if (val.charCodeAt(0) === 0x22) {
-        val = val.slice(1, -1)
-      }
-
       obj[key] = tryDecode(val, dec);
     } else if (opt.multiValuedCookies) {
       if (typeof obj[key] === 'string') {

@@ -6,6 +6,9 @@
 [![Build Status][github-actions-ci-image]][github-actions-ci-url]
 [![Test Coverage][coveralls-image]][coveralls-url]
 
+## WARNING
+### This is a fork of original repo and contains [THIS PR](https://github.com/jshttp/cookie/pull/108)
+
 Basic HTTP cookie parser and serializer for HTTP servers.
 
 ## Installation

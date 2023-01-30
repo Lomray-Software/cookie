@@ -60,29 +60,31 @@ describe('cookie.parse(str, options)', function () {
   })
 })
 
-test('multiValuedCookies flag', function () {
-  assert.deepEqual(
-    { foo: ["%1", "boo"], bar: "bar" },
-    cookie.parse("foo=%1;bar=bar;foo=boo", {
-      multiValuedCookies: true
-    })
-  );
-  assert.deepEqual(
-    { foo: ["", "boo"], bar: "bar" },
-    cookie.parse("foo=;bar=bar;foo=boo", {
-      multiValuedCookies: true,
-    })
-  );
-  assert.deepEqual(
-    { foo: ["%1", "boo", "bar"], bar: "bar" },
-    cookie.parse("foo=%1;bar=bar;foo=boo;foo=bar", {
-      multiValuedCookies: true,
-    })
-  );
-  assert.deepEqual(
-    { foo: "%1", bar: "bar" },
-    cookie.parse("foo=%1;bar=bar", {
-      multiValuedCookies: true,
-    })
-  );
+describe('multiValuedCookies flag', function () {
+  it('multiValuedCookies', function () {
+    assert.deepEqual(
+      { foo: ["%1", "boo"], bar: "bar" },
+      cookie.parse("foo=%1;bar=bar;foo=boo", {
+        multiValuedCookies: true
+      })
+    );
+    assert.deepEqual(
+      { foo: ["", "boo"], bar: "bar" },
+      cookie.parse("foo=;bar=bar;foo=boo", {
+        multiValuedCookies: true,
+      })
+    );
+    assert.deepEqual(
+      { foo: ["%1", "boo", "bar"], bar: "bar" },
+      cookie.parse("foo=%1;bar=bar;foo=boo;foo=bar", {
+        multiValuedCookies: true,
+      })
+    );
+    assert.deepEqual(
+      { foo: "%1", bar: "bar" },
+      cookie.parse("foo=%1;bar=bar", {
+        multiValuedCookies: true,
+      })
+    );
+  });
 });
